@@ -1,11 +1,4 @@
-# Option 1: Use environment variable (recommended)
-if(DEFINED ENV{VCPKG_ROOT})
-    set(CMAKE_TOOLCHAIN_FILE "$ENV{VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake" 
-        CACHE STRING "Vcpkg toolchain file")
-else()
-    set(CMAKE_TOOLCHAIN_FILE "C:/dev/vcpkg/scripts/buildsystems/vcpkg.cmake" 
-        CACHE STRING "Vcpkg toolchain file")
-endif()
+set(CMAKE_TOOLCHAIN_FILE "C:/dev/vcpkg/scripts/buildsystems/vcpkg.cmake" CACHE STRING "Vcpkg toolchain file")
 
 cmake_minimum_required(VERSION 3.10)
 project(WakingNightmare2D)
