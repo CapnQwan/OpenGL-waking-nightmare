@@ -14,9 +14,20 @@ project(WakingNightmare2D)
 set(CMAKE_CXX_STANDARD 17)
 
 # Add the executable
+set(CORE_SOURCES
+    src/Core/Core.cpp
+    src/Core/ServiceLocator.cpp
+)
+
+set(TIME_SOURCES
+    src/Core/Time/Time.cpp
+)
+
 add_executable(MyOpenGLProject
     src/main.cpp
-    src/glad.c
+    src/glad/glad.c
+    ${CORE_SOURCES}
+    ${TIME_SOURCES}
 )
 
 # Include directories
@@ -24,6 +35,8 @@ target_include_directories(MyOpenGLProject PRIVATE
     ${CMAKE_SOURCE_DIR}/include
     ${CMAKE_SOURCE_DIR}/include/KHR
     ${CMAKE_SOURCE_DIR}/include/glad
+    ${CMAKE_SOURCE_DIR}/src
+    "$ENV{VCPKG_ROOT}/installed/x64-windows/include"
 )
 
 # Find and link libraries
