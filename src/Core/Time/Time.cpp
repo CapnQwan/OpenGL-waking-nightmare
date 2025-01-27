@@ -1,4 +1,4 @@
-#include "Time/Time.hpp"
+#include "Core/Time/Time.hpp"
 
 Time::Time() {
     startTime = glfwGetTime();

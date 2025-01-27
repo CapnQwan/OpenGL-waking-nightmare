@@ -31,6 +31,10 @@ bool Core::Initialize() {
     }
     
     glfwMakeContextCurrent(window);
+    //TODO: Add toggle to this to enable / disable vsync
+    if (true) {
+        glfwSwapInterval(0);
+    }
 
     // Initialize GLAD
     if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) {

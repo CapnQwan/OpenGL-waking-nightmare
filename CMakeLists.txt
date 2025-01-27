@@ -23,11 +23,16 @@ set(TIME_SOURCES
     src/Core/Time/Time.cpp
 )
 
+set(UTILS_SOURCES
+    src/Utils/Math/Mathf.cpp
+)
+
 add_executable(MyOpenGLProject
     src/main.cpp
     src/glad/glad.c
     ${CORE_SOURCES}
     ${TIME_SOURCES}
+    ${UTILS_SOURCES}
 )
 
 # Include directories
