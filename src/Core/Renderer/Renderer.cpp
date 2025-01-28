@@ -4,7 +4,10 @@
 #include <iostream>
 
 Renderer::Renderer(GLFWwindow* window) : window(window) {
-
+    if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) {
+        std::cout << "Failed to initialize GLAD" << std::endl;
+    }
+    Initialize();
 }
 
 Renderer::~Renderer() {
@@ -35,12 +38,13 @@ void Renderer::Initialize() {
     glEnableVertexAttribArray(0);
 
     // Create and compile shaders
-    const char *vertexShaderSource = "#version 330 core\n"
-    "layout (location = 0) in vec3 aPos;\n"
-    "void main()\n"
-    "{\n"
-    "   gl_Position = vec4(aPos.x, aPos.y, aPos.z, 1.0);\n"
-    "}\0";
+    const char* vertexShaderSource = R"(
+        #version 330 core
+        layout (location = 0) in vec3 aPos;
+        void main() {
+            gl_Position = vec4(aPos.x, aPos.y, aPos.z, 1.0);
+        }
+    )";
     
     const char* fragmentShaderSource = R"(
         #version 330 core
@@ -55,14 +59,10 @@ void Renderer::Initialize() {
     glShaderSource(vertexShader, 1, &vertexShaderSource, NULL);
     glCompileShader(vertexShader);
 
-    ValidateShader(vertexShader);
-
     // Compile fragment shader
     unsigned int fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
     glShaderSource(fragmentShader, 1, &fragmentShaderSource, NULL);
     glCompileShader(fragmentShader);
-
-    ValidateShader(fragmentShader);
 
     // Create shader program
     shaderProgram = glCreateProgram();
@@ -84,17 +84,11 @@ void Renderer::Render() {
     glBindVertexArray(VAO);
     glDrawArrays(GL_TRIANGLES, 0, 3);
 
+    GLenum err;
+    while((err = glGetError()) != GL_NO_ERROR) {
+        std::cout << "OpenGL error: " << err << std::endl;
+    }
+
     glfwSwapBuffers(window);
     glfwPollEvents();
-}
-
-void Renderer::ValidateShader(unsigned int vertexShader) {
-    int  success;
-    char infoLog[512];
-    glGetShaderiv(vertexShader, GL_COMPILE_STATUS, &success);
-
-    if(!success) {
-        glGetShaderInfoLog(vertexShader, 512, NULL, infoLog);
-        std::cout << "ERROR::SHADER::VERTEX::COMPILATION_FAILED\n" << infoLog << std::endl;
-    }
 }

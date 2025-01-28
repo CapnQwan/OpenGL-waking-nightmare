@@ -16,5 +16,4 @@ public:
 
     void Initialize();
     void Render();
-    void ValidateShader(unsigned int vertexShader);
 };
