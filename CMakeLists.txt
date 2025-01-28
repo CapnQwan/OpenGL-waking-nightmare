@@ -12,6 +12,10 @@ set(CORE_SOURCES
     src/Core/ServiceLocator.cpp
 )
 
+set(RENDERER_SOURCES
+    src/Core/Renderer/Renderer.cpp
+)
+
 set(TIME_SOURCES
     src/Core/Time/Time.cpp
 )
@@ -24,6 +28,7 @@ add_executable(MyOpenGLProject
     src/main.cpp
     src/glad/glad.c
     ${CORE_SOURCES}
+    ${RENDERER_SOURCES}
     ${TIME_SOURCES}
     ${UTILS_SOURCES}
 )

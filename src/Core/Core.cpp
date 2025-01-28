@@ -3,6 +3,7 @@
 #include "Time/Time.hpp"
 #include <iostream>
 #include <string>
+#include "Renderer/Renderer.hpp"
 
 Core::Core() : window(nullptr) {}
 
@@ -51,6 +52,9 @@ bool Core::Initialize() {
     auto time = std::make_shared<Time>();
     ServiceLocator::Provide<Time>(time);
 
+    auto renderer = std::make_shared<Renderer>(window);
+    ServiceLocator::Provide<Renderer>(renderer);
+
     return true;
 }
 
@@ -58,7 +62,7 @@ void Core::Run() {
     while (!glfwWindowShouldClose(window)) {
         ProcessInput();
         Update();
-        Render();
+        ServiceLocator::Get<Renderer>()->Render();
     }
 }
 
@@ -80,16 +84,6 @@ void Core::Update() {
     glfwSetWindowTitle(window, title.c_str());
     
     // Update game state here
-}
-
-void Core::Render() {
-    // Render
-    glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
-    glClear(GL_COLOR_BUFFER_BIT);
-
-    // Swap buffers and poll events
-    glfwSwapBuffers(window);
-    glfwPollEvents();
 }
 
 void Core::Shutdown() {

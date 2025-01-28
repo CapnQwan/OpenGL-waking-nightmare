@@ -19,5 +19,4 @@ public:
 private:
     void ProcessInput();
     void Update();
-    void Render();
 }; 
