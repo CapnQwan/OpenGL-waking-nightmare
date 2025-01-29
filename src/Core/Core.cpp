@@ -3,7 +3,7 @@
 #include "Time/Time.hpp"
 #include <iostream>
 #include <string>
-#include "Renderer/Renderer.hpp"
+#include "Rendering/Renderer.hpp"
 
 Core::Core() : window(nullptr) {}
 

@@ -1,6 +1,9 @@
 #include "Renderer.hpp"
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
+#include <fstream>
+#include <sstream>
+#include <string>
 #include <iostream>
 
 Renderer::Renderer(GLFWwindow* window) : window(window) {
@@ -37,22 +40,11 @@ void Renderer::Initialize() {
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
     glEnableVertexAttribArray(0);
 
-    // Create and compile shaders
-    const char* vertexShaderSource = R"(
-        #version 330 core
-        layout (location = 0) in vec3 aPos;
-        void main() {
-            gl_Position = vec4(aPos.x, aPos.y, aPos.z, 1.0);
-        }
-    )";
-    
-    const char* fragmentShaderSource = R"(
-        #version 330 core
-        out vec4 FragColor;
-        void main() {
-            FragColor = vec4(1.0f, 0.5f, 0.2f, 1.0f);
-        }
-    )";
+    // Load shader sources from files
+    std::string vertexShaderStr = LoadShaderSource("../../src/Shaders/default_vertex.glsl");
+    std::string fragmentShaderStr = LoadShaderSource("../../src/Shaders/default_fragment.glsl");
+    const char* vertexShaderSource = vertexShaderStr.c_str();
+    const char* fragmentShaderSource = fragmentShaderStr.c_str();
 
     // Compile vertex shader
     unsigned int vertexShader = glCreateShader(GL_VERTEX_SHADER);
@@ -91,4 +83,15 @@ void Renderer::Render() {
 
     glfwSwapBuffers(window);
     glfwPollEvents();
+}
+
+std::string Renderer::LoadShaderSource(const std::string& filepath) {
+    std::ifstream file(filepath);
+    if (!file.is_open()) {
+        std::cerr << "Failed to open shader file: " << filepath << std::endl;
+        return "";
+    }
+    std::stringstream buffer;
+    buffer << file.rdbuf();
+    return buffer.str();
 }

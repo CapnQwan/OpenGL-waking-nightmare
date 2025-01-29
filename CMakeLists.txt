@@ -13,7 +13,8 @@ set(CORE_SOURCES
 )
 
 set(RENDERER_SOURCES
-    src/Core/Renderer/Renderer.cpp
+    src/Core/Rendering/Renderer.cpp
+    src/Core/Rendering/Materials/Material.cpp
 )
 
 set(TIME_SOURCES

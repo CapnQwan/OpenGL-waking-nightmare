@@ -1,6 +1,7 @@
 #include <vector>
 #include <string>
 #include <glad/glad.h>
+#include "../../Core/Rendering/Materials/Material.hpp"
 
 class Mesh {
 private:
@@ -12,6 +13,7 @@ private:
     // TODO: look into using a single VAO for multiple meshes (batch rendering)
     // This will make the number of draw calls much lower and improve performance
     unsigned int VAO, VBO, EBO;
+    Material* material;
 
 public:
     Mesh(const std::vector<float>& vertices, const std::vector<unsigned int>& indices);

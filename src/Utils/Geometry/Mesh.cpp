@@ -1,7 +1,10 @@
 #include "Mesh.hpp"
 #include <glad/glad.h>
+#include "../../Core/Rendering/Materials/Material.hpp"
 
 Mesh::Mesh(const std::vector<float>& vertices, const std::vector<unsigned int>& indices) : vertices(vertices), indices(indices) {
+    
+    this->material = (material) ? material : Material::GetDefaultMaterial();
     SetupMesh();
 }
 
