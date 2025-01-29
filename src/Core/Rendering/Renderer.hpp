@@ -3,14 +3,14 @@
 #include <GLFW/glfw3.h>
 #include <string>
 #include <iostream>
+#include "../../Utils/Geometry/Mesh.hpp"
 
-struct GLFWwindow;  // Forward declaration
+struct GLFWwindow;
 
 class Renderer {
 private:
     GLFWwindow* window;
-    unsigned int VAO, VBO;
-    unsigned int shaderProgram;
+    Mesh mesh;
 
 public:
     Renderer(GLFWwindow* window);
@@ -18,6 +18,4 @@ public:
 
     void Initialize();
     void Render();
-    //TODO: move to a separate class so that file management is centralized
-    std::string LoadShaderSource(const std::string& filepath);
 };

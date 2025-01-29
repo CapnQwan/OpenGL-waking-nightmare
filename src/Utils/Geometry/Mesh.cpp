@@ -2,8 +2,7 @@
 #include <glad/glad.h>
 #include "../../Core/Rendering/Materials/Material.hpp"
 
-Mesh::Mesh(const std::vector<float>& vertices, const std::vector<unsigned int>& indices) : vertices(vertices), indices(indices) {
-    
+Mesh::Mesh(const std::vector<float>& vertices, const std::vector<unsigned int>& indices, Material* material) : vertices(vertices), indices(indices) {
     this->material = (material) ? material : Material::GetDefaultMaterial();
     SetupMesh();
 }
@@ -15,9 +14,10 @@ Mesh::~Mesh() {
 }   
 
 void Mesh::Render() {
+    material->Use();
     glBindVertexArray(VAO);
-    glDrawElements(GL_TRIANGLES, indices.size(), GL_UNSIGNED_INT, 0);
-    glBindVertexArray(0);
+    glDrawArrays(GL_TRIANGLES, 0, 3);
+    glBindVertexArray(0);   
 }
 
 void Mesh::SetupMesh() {

@@ -58,16 +58,47 @@ The executable will be located in `build/Release/MyOpenGLProject.exe`
 ## Project Structure
 
 ```
-project_root/
+OpenGL_Waking_Nightmare_2D/
+├── Assets/
+├── Core/
+| ├── GameObjects/
+| ├── Inputs/
+│ ├── Rendering/
+│ │ ├── Materials/
+│ │ │ ├── Material.hpp
+│ │ │ └── Material.cpp
+│ │ ├── Renderer.hpp
+│ │ └── Renderer.cpp
+│ ├── Time/
+│ │ ├── Time.hpp
+│ │ └── Time.cpp
+│ ├── Core.hpp
+│ ├── Core.cpp
+│ ├── ServiceLocator.hpp
+│ └── ServiceLocator.cpp
 ├── include/
 │ ├── glad/
 │ │ ├── glad.h
 │ │ └── khrplatform.h
 │ └── KHR/
 │ └── khrplatform.h
+├── Shaders/
+│ ├── default_fragment.glsl
+│ └── default_vertex.glsl
+├── Utils/
+│ ├── Geometry/
+│ │ ├── Mesh.hpp
+│ │ └── Mesh.cpp
+│ ├── Math/
+│ │ ├── Mathd.hpp
+│ │ └── Mathd.cpp
+│ │ ├── Mathf.hpp
+│ │ └── Mathf.cpp
+│ │ ├── Mathi.hpp
+│ │ └── Mathi.cpp
+│ └── Logging/
 ├── src/
-│ ├── main.cpp
-│ └── glad.c
+│ └── main.cpp
 └── CMakeLists.txt
 ```
 

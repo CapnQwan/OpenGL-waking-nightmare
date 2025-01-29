@@ -5,6 +5,7 @@
 #include <sstream>
 #include <string>
 #include <iostream>
+#include <filesystem> // For std::filesystem::absolute
 
 Material* Material::defaultMaterial = nullptr;
 
@@ -50,9 +51,18 @@ void Material::Initialize() {
     glDeleteShader(fragmentShader);
 }
 
+void Material::Use() {
+    if (shaderProgram == 0) {
+        std::cerr << "Shader program is invalid!" << std::endl;
+    }
+
+    glUseProgram(shaderProgram);
+}
+
 unsigned int Material::CompileShader(const char* source, GLenum shaderType) {
     unsigned int shader = glCreateShader(shaderType);
     glShaderSource(shader, 1, &source, NULL);
+
     glCompileShader(shader);
 
     // Check for compilation errors
@@ -71,6 +81,7 @@ std::string Material::LoadShaderSource(const std::string& filepath) {
     std::ifstream file(filepath);
     if (!file.is_open()) {
         std::cerr << "Failed to open shader file: " << filepath << std::endl;
+        std::cout << "Absolute path attempted: " << std::filesystem::absolute(filepath) << std::endl;
         return "";
     }
 
@@ -81,11 +92,13 @@ std::string Material::LoadShaderSource(const std::string& filepath) {
 
 Material* Material::GetDefaultMaterial() {
     if (!defaultMaterial) {
+        std::string vertexPath = "../../src/Shaders/default_vertex.glsl";
+        std::string fragmentPath = "../../src/Shaders/default_fragment.glsl";
         // Initialize default material only once
         defaultMaterial = new Material(
             "DefaultMaterial",
-            "../../../shaders/default_vertex.glsl",
-            "../../../shaders/default_fragment.glsl"
+            vertexPath,
+            fragmentPath
         );
     }
     return defaultMaterial;

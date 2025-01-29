@@ -18,6 +18,7 @@ public:
     ~Material();
 
     void Initialize();
+    void Use();
     unsigned int CompileShader(const char* source, GLenum shaderType);
     std::string LoadShaderSource(const std::string& filepath);
 

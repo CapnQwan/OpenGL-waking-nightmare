@@ -23,7 +23,14 @@ set(TIME_SOURCES
 
 set(UTILS_SOURCES
     src/Utils/Math/Mathf.cpp
+    src/Utils/Geometry/Mesh.cpp
 )
+
+set(SHADERS_SOURCES
+    src/Shaders/default_vertex.glsl
+    src/Shaders/default_fragment.glsl
+)
+
 
 add_executable(MyOpenGLProject
     src/main.cpp
