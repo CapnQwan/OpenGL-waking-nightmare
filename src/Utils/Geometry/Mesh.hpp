@@ -1,6 +1,7 @@
 #pragma once
 #include <vector>
 #include <string>
+#include <memory>
 #include <glad/glad.h>
 #include "../../Core/Rendering/Materials/Material.hpp"
 
@@ -15,10 +16,10 @@ private:
     // This will make the number of draw calls much lower and improve performance
     unsigned int VAO, VBO, EBO;
     
-    Material* material;
+    std::unique_ptr<Material> material;
 
 public:
-    Mesh(const std::vector<float>& vertices = {}, const std::vector<unsigned int>& indices = {}, Material* material = nullptr);
+    Mesh(const std::vector<float>& vertices = {}, const std::vector<unsigned int>& indices = {}, std::unique_ptr<Material> material = nullptr);
     ~Mesh();
 
     void Render();

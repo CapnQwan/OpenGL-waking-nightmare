@@ -11,7 +11,7 @@ private:
     std::string fragmentShaderSrc;
     unsigned int shaderProgram;
 
-    static Material* defaultMaterial;
+    static std::unique_ptr<Material> defaultMaterial;
 
 public:
     Material(const std::string& name, const std::string& vertexShader, const std::string& fragmentShader);

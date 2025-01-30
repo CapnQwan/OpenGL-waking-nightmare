@@ -10,7 +10,7 @@ struct GLFWwindow;
 class Renderer {
 private:
     GLFWwindow* window;
-    Mesh mesh;
+    std::unique_ptr<Mesh> mesh;
 
 public:
     Renderer(GLFWwindow* window);

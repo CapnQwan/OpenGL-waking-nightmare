@@ -5,9 +5,9 @@
 #include <sstream>
 #include <string>
 #include <iostream>
-#include <filesystem> // For std::filesystem::absolute
+#include <filesystem>
 
-Material* Material::defaultMaterial = nullptr;
+std::unique_ptr<Material> Material::defaultMaterial = nullptr;
 
 Material::Material(const std::string& name, const std::string& vertexShaderSrc, const std::string& fragmentShaderSrc)
     : name(name), vertexShaderSrc(vertexShaderSrc), fragmentShaderSrc(fragmentShaderSrc) {
@@ -37,14 +37,15 @@ void Material::Initialize() {
     glAttachShader(shaderProgram, fragmentShader);
     glLinkProgram(shaderProgram);
 
-    // Check for linking errors
+    // Error Checking for Shader Linking
     int success;
+    char infoLog[512];
     glGetProgramiv(shaderProgram, GL_LINK_STATUS, &success);
     if (!success) {
-        char infoLog[512];
         glGetProgramInfoLog(shaderProgram, 512, NULL, infoLog);
-        std::cerr << "Shader program linking failed: " << infoLog << std::endl;
+        std::cerr << "ERROR: Shader Program Linking Failed\n" << infoLog << std::endl;
     }
+
 
     // Clean up shaders
     glDeleteShader(vertexShader);
@@ -53,7 +54,8 @@ void Material::Initialize() {
 
 void Material::Use() {
     if (shaderProgram == 0) {
-        std::cerr << "Shader program is invalid!" << std::endl;
+        std::cerr << "ERROR: Shader program is invalid, cannot use!" << std::endl;
+        return;
     }
 
     glUseProgram(shaderProgram);
@@ -82,7 +84,7 @@ std::string Material::LoadShaderSource(const std::string& filepath) {
     if (!file.is_open()) {
         std::cerr << "Failed to open shader file: " << filepath << std::endl;
         std::cout << "Absolute path attempted: " << std::filesystem::absolute(filepath) << std::endl;
-        return "";
+        throw std::runtime_error("Failed to load shader: " + filepath);
     }
 
     std::stringstream buffer;
@@ -91,15 +93,18 @@ std::string Material::LoadShaderSource(const std::string& filepath) {
 }
 
 Material* Material::GetDefaultMaterial() {
+    static bool isDestroyed = false;
+
     if (!defaultMaterial) {
         std::string vertexPath = "../../src/Shaders/default_vertex.glsl";
         std::string fragmentPath = "../../src/Shaders/default_fragment.glsl";
         // Initialize default material only once
-        defaultMaterial = new Material(
+        defaultMaterial = std::make_unique<Material>(
             "DefaultMaterial",
             vertexPath,
             fragmentPath
         );
     }
-    return defaultMaterial;
+    
+    return defaultMaterial.get();
 }
