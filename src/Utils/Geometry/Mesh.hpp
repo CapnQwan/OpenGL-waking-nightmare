@@ -19,7 +19,14 @@ private:
     std::unique_ptr<Material> material;
 
 public:
-    Mesh(const std::vector<float>& vertices = {}, const std::vector<unsigned int>& indices = {}, std::unique_ptr<Material> material = nullptr);
+    //TODO: Remove default triangle to a static class
+    Mesh(const std::vector<float>& vertices = {
+        -0.5f, -0.5f, 0.0f,  // Bottom left
+         0.5f, -0.5f, 0.0f,  // Bottom right
+         0.0f,  0.5f, 0.0f   // Top
+    }, const std::vector<unsigned int>& indices = {
+        0, 1, 2
+    }, std::unique_ptr<Material> material = nullptr);
     ~Mesh();
 
     void Render();

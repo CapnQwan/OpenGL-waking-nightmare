@@ -18,19 +18,7 @@ Renderer::~Renderer() {
 }
 
 void Renderer::Initialize() {
-    // Set up vertex data for a triangle
-    std::vector<float> vertices = {
-        -0.5f, -0.5f, 0.0f,  // Bottom left
-         0.5f, -0.5f, 0.0f,  // Bottom right
-         0.0f,  0.5f, 0.0f   // Top
-    };
-
-    std::vector<unsigned int> indices = {
-        0, 1, 2
-    };
-
-
-    mesh = std::make_unique<Mesh>(vertices, indices);
+    mesh = std::make_unique<Mesh>();
 }
 
 void Renderer::Render() {
