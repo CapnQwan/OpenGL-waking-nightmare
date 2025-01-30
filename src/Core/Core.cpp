@@ -31,7 +31,12 @@ bool Core::Initialize() {
         return false;
     }
     
+    
     glfwMakeContextCurrent(window);
+    if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) {
+        std::cerr << "Failed to initialize GLAD!" << std::endl;
+    }
+    
     //TODO: Add toggle to this to enable / disable vsync
     if (true) {
         glfwSwapInterval(0);
