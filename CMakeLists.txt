@@ -24,6 +24,9 @@ set(TIME_SOURCES
 set(UTILS_SOURCES
     src/Utils/Math/Mathf.cpp
     src/Utils/Geometry/Mesh.cpp
+    src/Utils/Math/Transform/Transform.cpp
+    src/Utils/Math/Vector/Vector3.cpp
+    src/Utils/Math/Vector/Vector2.cpp
 )
 
 set(SHADERS_SOURCES

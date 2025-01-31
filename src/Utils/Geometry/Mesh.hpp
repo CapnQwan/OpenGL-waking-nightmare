@@ -3,7 +3,6 @@
 #include <string>
 #include <memory>
 #include <glad/glad.h>
-#include "../../Core/Rendering/Materials/Material.hpp"
 
 class Mesh {
 private:
@@ -15,21 +14,17 @@ private:
     // TODO: look into using a single VAO for multiple meshes (batch rendering)
     // This will make the number of draw calls much lower and improve performance
     unsigned int VAO, VBO, EBO;
-    
-    std::unique_ptr<Material> material;
 
 public:
     //TODO: Remove default triangle to a static class
-    Mesh(const std::vector<float>& vertices = {
-        -0.5f, -0.5f, 0.0f,  // Bottom left
-         0.5f, -0.5f, 0.0f,  // Bottom right
-         0.0f,  0.5f, 0.0f   // Top
-    }, const std::vector<unsigned int>& indices = {
-        0, 1, 2
-    }, std::unique_ptr<Material> material = nullptr);
+    Mesh(const std::vector<float>& vertices = {}, 
+    const std::vector<unsigned int>& indices = {});
     ~Mesh();
 
     void Render();
+
+    static std::shared_ptr<Mesh> GetDefaultTriangle();
+    static std::shared_ptr<Mesh> GetDefaultSquare();
 
 private:
     void SetupMesh();

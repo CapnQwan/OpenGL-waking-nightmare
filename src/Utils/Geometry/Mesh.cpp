@@ -4,13 +4,9 @@
 #include <iostream>
 #include <memory>
 
-#define CHECK_GL_ERROR() { GLenum err; while((err = glGetError()) != GL_NO_ERROR) { std::cerr << "OpenGL error: " << err << " at line " << __LINE__ << std::endl; } }
-
-Mesh::Mesh(const std::vector<float>& vertices, const std::vector<unsigned int>& indices, std::unique_ptr<Material> material)
-    : vertices(vertices), indices(indices), material(material ? std::make_unique<Material>(*material) : nullptr) {
-    if (!this->material) {
-        this->material = std::make_unique<Material>(*Material::GetDefaultMaterial());
-    }
+Mesh::Mesh(const std::vector<float>& vertices, const std::vector<unsigned int>& indices)
+    : vertices(vertices.empty() ? GetDefaultTriangle()->vertices : vertices),
+      indices(indices.empty() ? GetDefaultTriangle()->indices : indices) {
     SetupMesh();
 }
 
@@ -20,14 +16,12 @@ Mesh::~Mesh() {
     glDeleteBuffers(1, &EBO);
 }   
 
-void Mesh::Render() {
-    if (!material) {
-        std::cerr << "ERROR: Mesh has no material assigned!" << std::endl;
+void Mesh::Render() {    
+    if (vertices.empty()) {
+        std::cerr << "WARNING: Attempted to render an empty mesh!" << std::endl;
         return;
     }
 
-    material->Use();
-    
     // TODO: Add model matrix uniform
     //GLint modelLoc = glGetUniformLocation(material->GetShaderProgram(), "uModel");
     //glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(modelMatrix));
@@ -68,4 +62,20 @@ void Mesh::SetupMesh() {
 
     // Unbind VAO to prevent accidental modification
     glBindVertexArray(0);
+}
+
+std::shared_ptr<Mesh> Mesh::GetDefaultTriangle() {
+    static std::shared_ptr<Mesh> defaultTriangle = std::make_shared<Mesh>(
+        std::vector<float>{ -0.5f, -0.5f, 0.0f,  0.5f, -0.5f, 0.0f,  0.0f,  0.5f, 0.0f },
+        std::vector<unsigned int>{ 0, 1, 2 }
+    );
+    return defaultTriangle;
+}
+
+std::shared_ptr<Mesh> Mesh::GetDefaultSquare() {
+    static std::shared_ptr<Mesh> defaultSquare = std::make_shared<Mesh>(
+        std::vector<float>{ -0.5f, -0.5f, 0.0f,  0.5f, -0.5f, 0.0f,  0.5f,  0.5f, 0.0f, -0.5f,  0.5f, 0.0f },
+        std::vector<unsigned int>{ 0, 1, 2, 3 }
+    );
+    return defaultSquare;
 }

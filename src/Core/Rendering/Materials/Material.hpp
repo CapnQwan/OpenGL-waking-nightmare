@@ -11,7 +11,7 @@ private:
     std::string fragmentShaderSrc;
     unsigned int shaderProgram;
 
-    static std::unique_ptr<Material> defaultMaterial;
+    static std::shared_ptr<Material> defaultMaterial;
 
 public:
     Material(const std::string& name, const std::string& vertexShader, const std::string& fragmentShader);
@@ -22,6 +22,6 @@ public:
     unsigned int CompileShader(const char* source, GLenum shaderType);
     std::string LoadShaderSource(const std::string& filepath);
 
-    static Material* GetDefaultMaterial();
+    static std::shared_ptr<Material> GetDefaultMaterial();
 };
 

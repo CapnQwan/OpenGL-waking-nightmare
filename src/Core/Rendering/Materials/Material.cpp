@@ -7,7 +7,7 @@
 #include <iostream>
 #include <filesystem>
 
-std::unique_ptr<Material> Material::defaultMaterial = nullptr;
+std::shared_ptr<Material> Material::defaultMaterial = nullptr;
 
 Material::Material(const std::string& name, const std::string& vertexShaderSrc, const std::string& fragmentShaderSrc)
     : name(name), vertexShaderSrc(vertexShaderSrc), fragmentShaderSrc(fragmentShaderSrc) {
@@ -92,19 +92,19 @@ std::string Material::LoadShaderSource(const std::string& filepath) {
     return buffer.str();
 }
 
-Material* Material::GetDefaultMaterial() {
+std::shared_ptr<Material> Material::GetDefaultMaterial() {
     static bool isDestroyed = false;
 
     if (!defaultMaterial) {
         std::string vertexPath = "../../src/Shaders/default_vertex.glsl";
         std::string fragmentPath = "../../src/Shaders/default_fragment.glsl";
         // Initialize default material only once
-        defaultMaterial = std::make_unique<Material>(
+        defaultMaterial = std::make_shared<Material>(
             "DefaultMaterial",
             vertexPath,
             fragmentPath
         );
     }
     
-    return defaultMaterial.get();
+    return defaultMaterial;
 }
