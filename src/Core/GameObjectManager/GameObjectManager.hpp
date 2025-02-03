@@ -57,23 +57,17 @@ public:
         return gameObjects;
     }
 
-    // Example update function.
-    // If your GameObject class (or its components) have an update method,
-    // you can iterate and update each game object.
-    void Update(float deltaTime) {
+    // Iterate and update each game object.
+    void Update() {
         for (auto& [id, gameObject] : gameObjects) {
-            // If you add an Update method to GameObject, you could call it here:
-            // gameObject->Update(deltaTime);
+            gameObject->Update();
         }
     }
 
-    // Example render function.
-    // Similarly, if your GameObject class has a render method,
-    // you can iterate and render each game object.
+    // Iterate and render each game object.
     void Render() {
         for (auto& [id, gameObject] : gameObjects) {
-            // If you add a Render method to GameObject, you could call it here:
-            // gameObject->Render();
+            gameObject->Render();
         }
     }
 };

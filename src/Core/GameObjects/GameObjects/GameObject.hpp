@@ -46,4 +46,10 @@ public:
         std::type_index type = typeid(T);
         components.erase(type);
     }
+
+    void Awake();
+    void Start();
+    void Update();
+    void Render();
 };
+

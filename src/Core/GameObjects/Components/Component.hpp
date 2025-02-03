@@ -13,5 +13,10 @@ public:
 
     Transform* GetTransform() { return transform; }
     GameObject* GetGameObject() { return gameObject; }
+    
+    // Virtual lifecycle functions with default (do nothing) implementations.
+    virtual void HandleAwake() {}
+    virtual void HandleStart() {}
+    virtual void HandleUpdate() {}
 };
 
