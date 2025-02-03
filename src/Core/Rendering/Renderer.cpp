@@ -18,14 +18,14 @@ Renderer::~Renderer() {
 }
 
 void Renderer::Initialize() {
-    mesh = std::make_unique<Mesh>();
+    //mesh = std::make_unique<Mesh>();
 }
 
 void Renderer::Render() {
     glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT);
 
-    mesh->Render();
+    //mesh->Render();
 
     GLenum err;
     while((err = glGetError()) != GL_NO_ERROR) {

@@ -1,16 +1,16 @@
 #include "MeshRenderer.hpp"
 
-MeshRenderer::MeshRenderer() {}
+MeshRenderer::MeshRenderer(GameObject* gameObject) : Component(gameObject) {}
 
 MeshRenderer::~MeshRenderer() {}
 
 void MeshRenderer::Render() {
     if (!mesh) {
-        std::cerr << "MeshRenderer Error: No mesh assigned!" << std::endl;
+        std::cerr << "MeshRenderer Error: No mesh assigned to " << gameObject->GetName() << "!" << std::endl;
         return;
     }
     if (!material) {
-        std::cerr << "MeshRenderer Error: No material assigned!" << std::endl;
+        std::cerr << "MeshRenderer Error: No material assigned to " << gameObject->GetName() << "!" << std::endl;
         return;
     }
 

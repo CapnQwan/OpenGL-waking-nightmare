@@ -9,7 +9,7 @@ private:
     std::shared_ptr<Material> material;
 
 public:
-    MeshRenderer();
+    MeshRenderer(GameObject* gameObject);
     ~MeshRenderer();
 
     void Render();
