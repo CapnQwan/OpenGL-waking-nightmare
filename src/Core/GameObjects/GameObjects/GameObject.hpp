@@ -1,5 +1,5 @@
 #pragma once
-#include "Object.hpp"
+#include "../Object.hpp"
 #include "../../Utils/Math/Transform/Transform.hpp"
 #include "../Components/Component.hpp"
 #include <unordered_map>

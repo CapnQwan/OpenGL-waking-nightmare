@@ -10,6 +10,15 @@ set(CMAKE_CXX_STANDARD 17)
 set(CORE_SOURCES
     src/Core/Core.cpp
     src/Core/ServiceLocator.cpp
+    src/Core/GameObjectManager/GameObjectManager.cpp
+)
+
+set(OBJECT_SOURCES
+    src/Core/GameObjects/Object.cpp
+    src/Core/GameObjects/GameObjects/GameObject.cpp
+    src/Core/GameObjects/Components/Component.cpp
+    src/Core/GameObjects/Components/BehaviourComponent/BehaviourComponent.cpp
+    src/Core/GameObjects/Components/RenderComponents/MeshRenderer.cpp
 )
 
 set(RENDERER_SOURCES
@@ -39,6 +48,7 @@ add_executable(MyOpenGLProject
     src/main.cpp
     src/glad/glad.c
     ${CORE_SOURCES}
+    ${OBJECT_SOURCES}
     ${RENDERER_SOURCES}
     ${TIME_SOURCES}
     ${UTILS_SOURCES}

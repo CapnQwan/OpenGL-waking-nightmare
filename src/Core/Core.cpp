@@ -4,6 +4,7 @@
 #include <iostream>
 #include <string>
 #include "Rendering/Renderer.hpp"
+#include "GameObjectManager/GameObjectManager.hpp"
 
 Core::Core() : window(nullptr) {}
 
@@ -59,6 +60,9 @@ bool Core::Initialize() {
 
     auto renderer = std::make_shared<Renderer>(window);
     ServiceLocator::Provide<Renderer>(renderer);
+
+    auto gameObjectManager = std::make_shared<GameObjectManager>();
+    ServiceLocator::Provide<GameObjectManager>(gameObjectManager);
 
     return true;
 }

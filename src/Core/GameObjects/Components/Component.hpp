@@ -1,5 +1,5 @@
 #pragma once
-#include "Object.hpp"
+#include "../Object.hpp"
 #include "../GameObjects/GameObject.hpp"
 
 class Component : public Object {
